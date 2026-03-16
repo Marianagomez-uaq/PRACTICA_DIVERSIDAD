@@ -1,9 +1,9 @@
 
-# Diversidad alfa
+# Gráficas
 
 ################################################################################
 
 
-# Jaccard
+# Rango-abundancia
 
-# Bray-Curtis
+# Rarefacción

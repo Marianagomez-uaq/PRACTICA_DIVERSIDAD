@@ -1,1 +1,0 @@
-# Curvas de rarefacción
