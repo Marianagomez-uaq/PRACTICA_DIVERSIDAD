@@ -2,9 +2,89 @@
 title: "Reporte de práctica: Análisis de diversidad de especies en comunidades ecológicas simuladas"
 author: "Mayra Lizeth Bárcenas Guevara y Mariana Gómez Becerra"
 date: "2026-03-16"
-output: html_document
+output: 
+  html_document: 
+    toc: true
+  pdf_document: 
+    toc: true
+    number_sections: true
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+------------------------------------------------------------------------
+
+## [Distribución de tareas]{style="color:purple;"}
+
+| Integrante | Contribución |
+|----------------------------|--------------------------------------------|
+| **Mayra** | Simpson, Inv-simpson, Bray-Curtis, Rarefacción, Tabla resumen alfa, 8 preguntas |
+| **Mariana** | Shannon, Pielou, Chao1, Rank-abundance, Jaccard, 8 preguntas |
+
+------------------------------------------------------------------------
+
+## [Diversidad alfa]{style="color:purple;"}
+
+------------------------------------------------------------------------
+
+## [Curvas de rarefacción]{style="color:purple;"}
+
+------------------------------------------------------------------------
+
+## [Gráficas de rango abundancia]{style="color:purple;"}
+
+------------------------------------------------------------------------
+
+## [Diversidad beta]{style="color:purple;"}
+
+------------------------------------------------------------------------
+
+## [Preguntas de análisis y reflexión]{style="color:purple;"}
+
+### A. Diversidad alfa - comparación entre índices
+
+1.  Compara los valores de Shannon y Simpson entre todos los sitios. ¿Por qué pueden dar órdenes de ranking distintos? ¿Qué información adicional aporta cada uno?
+
+2.  ¿Qué sitio presenta la mayor equitatividad según Pielou? ¿Podría tener mayor equitatividad pero menor riqueza que otro sitio? Explica con un ejemplo numérico concreto.
+
+3.  Compara la riqueza observada (S) con el estimado de Chao1. ¿En qué sitio la brecha es mayor? ¿Qué implicación tiene esto para el diseño de un muestreo real?
+
+4.  Si duplicaras el número de individuos muestreados en el sitio con menor riqueza, ¿esperarías que Chao1 cambiara significativamente? Justifica ecológica y estadísticamente.
+
+### B. Curvas de rarefacción
+
+5.  ¿Cuál sitio alcanza la asíntota más rápidamente? ¿Qué te dice eso sobre la estructura de la comunidad?
+
+6.  Dos sitios pueden tener la misma riqueza observada pero curvas con pendientes muy distintas. ¿Cómo interpretas esa diferencia en términos de abundancias relativas?
+
+7.  ¿A qué tamaño de muestra estandarizado compararías los sitios? Justifica tu elección y calcula la riqueza rarefactada para todos los sitios a ese nivel.
+
+### C. Gráficas de rango-abundancia
+
+8.  Identifica la forma general de cada curva (log-normal, geométrica, etc.). ¿Qué modelo ecológico subyace a cada forma? ¿Qué mecanismos comunitarios podrían explicarla?
+
+9.  ¿En qué sitio la especie más dominante representa la mayor fracción de individuos? ¿Cómo se relaciona ese resultado con el índice de Simpson?
+
+10. Imagina que en un monitoreo de largo plazo una curva log-normal se convierte en geométrica. ¿Qué perturbación ecológica podría explicarlo?
+
+### D. Diversidad beta
+
+11. Analiza la matriz de Bray-Curtis. ¿Qué par de sitios es más diferente? ¿Es el mismo par más diferente según Jaccard? Si no coinciden, ¿a qué se debe?
+
+12. ¿Qué componentes del recambio beta (reemplazo vs. anidamiento) podrían explicar los patrones que observas? (Pista: investiga el paquete betapart en R.)
+
+13. Si estos sitios representaran puntos a lo largo de un gradiente altitudinal, ¿qué patrón de beta-diversidad esperarías según la teoría del dominio medio (mid-domain effect)? ¿Coincide con tus resultados?
+
+### E. Síntesis e interpretación ecológica
+
+14. Construye una narrativa ecológica coherente: tomando todos los índices calculados, describe qué tipo de comunidad representa cada sitio (p. ej. perturbada, madura, oligoespéciosa) y propón una hipótesis sobre el proceso ecológico que generó esas diferencias.
+
+15. Si tuvieras que escoger un solo índice para monitorear la salud de estas comunidades a lo largo del tiempo, ¿cuál elegirías y por qué? ¿Cuáles serían sus limitaciones?
+
+16. Propón un diseño de muestreo para un estudio real que permita calcular diversidad alfa y beta de manera robusta. Especifica: número de sitios, réplicas, tamaño mínimo de muestra y justificación estadística.
+
+------------------------------------------------------------------------
+
+## [Referencias]{style="color:purple;"}
