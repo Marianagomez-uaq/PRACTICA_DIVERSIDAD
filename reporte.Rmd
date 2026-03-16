@@ -25,6 +25,34 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ------------------------------------------------------------------------
 
+
+```{r Carga de bases y paquetes, include=FALSE}
+
+
+# Carga de bases de datos
+
+Abundancias <- read.csv ("data/Abundancias.csv") # Lee el archivo y crea un data frame a partir de este
+
+row.names (Abundancias) <- Abundancias$Muestra # Toma los datos de la primera columna como nombres para las filas
+Abundancias <- Abundancias [,2:13] # Elimina esa columna
+
+
+Rarefaccion <- read.csv ("data/Rarefaccion.csv")
+
+row.names (Rarefaccion) <- Rarefaccion$Muestra
+Rarefaccion <- Rarefaccion [,2:6]
+
+
+# Carga de paquetes
+
+
+
+```
+
+
+
+
+
 ## [Diversidad alfa]{style="color:purple;"}
 
 ------------------------------------------------------------------------
