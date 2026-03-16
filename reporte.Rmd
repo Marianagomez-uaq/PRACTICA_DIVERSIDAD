@@ -1,0 +1,10 @@
+---
+title: "Reporte de práctica: Análisis de diversidad de especies en comunidades ecológicas simuladas"
+author: "Mayra Lizeth Bárcenas Guevara y Mariana Gómez Becerra"
+date: "2026-03-16"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
