@@ -116,3 +116,5 @@ Rarefaccion <- Rarefaccion [,2:6]
 ------------------------------------------------------------------------
 
 ## [Referencias]{style="color:purple;"}
+
+* Gómez Becerra, M. (2026). Diversidad (Versión 4.5.2) [Script de R].
