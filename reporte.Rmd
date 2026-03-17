@@ -21,7 +21,7 @@ knitr::opts_chunk$set(echo = TRUE)
 | Integrante | Contribución |
 |----------------------------|--------------------------------------------|
 | **Mayra** | Simpson, Inv-simpson, Bray-Curtis, Rarefacción, Tabla resumen alfa, 8 preguntas |
-| **Mariana** | Shannon, Pielou, Chao1, Rank-abundance, Jaccard, 8 preguntas |
+| **Mariana** | Riqueza, Shannon, Pielou, Chao1, Rank-abundance, Jaccard, 8 preguntas |
 
 ------------------------------------------------------------------------
 
@@ -118,3 +118,4 @@ Rarefaccion <- Rarefaccion [,2:6]
 ## [Referencias]{style="color:purple;"}
 
 * Gómez Becerra, M. (2026). Diversidad (Versión 4.5.2) [Script de R].
+* Educative. (s. f.). How to get the length of a vector in R. https://www.educative.io/answers/how-to-get-the-length-of-a-vector-in-r
