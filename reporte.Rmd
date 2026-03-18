@@ -355,17 +355,27 @@ El sitio 5 es el más equitativo. Sí podría tener más equitatividad pero meno
 
 3.  **Compara la riqueza observada (S) con el estimado de Chao1. ¿En qué sitio la brecha es mayor? ¿Qué implicación tiene esto para el diseño de un muestreo real?**
 
+Al comparar la riqueza y el índice de Chao1 podemos ver que los valores arrojados son similares entre sí, lo que nos indica que el muestreo que realizamos nos dio información sobre la mayoría de las especies presentes en los sitios de muestreo. 
+En la riqueza se puede ver que en el sitio 1 tiene el valor de 1, esto quiere decir que solamente existe una sola especie, en cambio en el índice de chao1 nos indica que no se puede calcular, esto se debe a que el índice de Chao1 se calcula mediante los singletons y doubletons, y al haber una sola especie no se puede calcular, al igual que en el sitio 7, que no se pudo calcular el valor de Chao1 y en la riqueza dio un valor de 10.
+Podemos ver que en un muestreo real se podrían llegar  tener datos que puedan representar la diversidad de ese lugar, sin embargo, podemos enfrentar ocasiones en los que no podremos encontrar singletons y doubletons que nos complica calcular el índice de Chao1 pero basándonos en los demás muestreos podemos llegar a la conclusión de si ya se observaron las especies presentes en el lugar.
+
 4.  **Si duplicaras el número de individuos muestreados en el sitio con menor riqueza, ¿esperarías que Chao1 cambiara significativamente? Justifica ecológica y estadísticamente.**
+
+Si esperaría que cambiará, dependiendo de lo que encontraramos en los muestreos influye en la  manera en la que va a cambiar, ya que podemos encontrar más singletons o incluso encontrar singletons que se pudieran volver doubletons, esto afectará en el índice de Chao por que si se aumentan únicamente los singletons indicaría que el muestreo es insuficiente y aún queda mucho por muestrear, y si aumentan los doubletons indicaría que el muestreo es mejor y que es más confiable ese muestreo; ecológicamente hablando, al duplicar el muestreo se da la oportunidad de encontrar una mayor diversidad de especies o tener la certeza que los muestreos han sido suficientes para representar la diversidad de un sitio.
 
 ### B. Curvas de rarefacción
 
 5.  **¿Cuál sitio alcanza la asíntota más rápidamente? ¿Qué te dice eso sobre la estructura de la comunidad?**
+
+El sitio 1, esto nos indica que existe una baja diversidad de especies y esto se puede comprobar porque en el sitio 1 solamente encontramos una sola especie
 
 6.  **Dos sitios pueden tener la misma riqueza observada pero curvas con pendientes muy distintas. ¿Cómo interpretas esa diferencia en términos de abundancias relativas?**
 
 Una curva con pendiente muy elevada, se interpreta como que hay mucha abundancia de varias especies (podría decirse que son equitativas), mientras que una curva con pendiente baja se interpreta como que hay dominio de una especie y otras tienen menos abundancia.
 
 7.  **¿A qué tamaño de muestra estandarizado compararías los sitios? Justifica tu elección y calcula la riqueza rarefactada para todos los sitios a ese nivel.**
+
+Al tamaño de la muestra 1, esto por que es el de menor tamaño y permite analizar la diversidad de los sitios respecto a la de menor riqueza 
 
 ### C. Gráficas de rango-abundancia
 
@@ -383,6 +393,8 @@ El índice de Simpson del sitio 1 es de 0 (Totalmente equitativo), y del sitio 2
 
 10. **Imagina que en un monitoreo de largo plazo una curva log-normal se convierte en geométrica. ¿Qué perturbación ecológica podría explicarlo?**
 
+Puede indicar una pérdida de diversidad que puede ser causada por la dominancia de una especie sobre las demás, esto puede ocasionar que la diversidad se pierda o disminuya o también puede ser que hay cambios en los nichos ecológicos, ya sea por perturbación del hombre o por causas naturales, ocasionando la pérdida de nichos y reduciendo la diversidad.
+
 ### D. Diversidad beta
 
 11. **Analiza la matriz de Bray-Curtis. ¿Qué par de sitios es más diferente? ¿Es el mismo par más diferente según Jaccard? Si no coinciden, ¿a qué se debe?**
@@ -391,7 +403,13 @@ Bray-Curtis indica que los más diferentes son el sitio 1 y 4, mientras que Jacc
 
 12. **¿Qué componentes del recambio beta (reemplazo vs. anidamiento) podrían explicar los patrones que observas? (Pista: investiga el paquete betapart en R.)**
 
+Podría ser que la diversidad podría explicar esto, la diversidad nos puede ayudar a comprender el reemplazo y anidamiento mediante la comparación entre Jaccard y Bray Curtis, ya que para el anidamiento puede representar que las especies que se encuentran en el sitio 1 (que es el que tiene menor diversidad) también se encuentran en otros sitios y el reemplazo puede ser comparado el sitio 1 con los sitios 3 y 4 por que su valor es más cercano a 1 y esto significa que casi no comparten especies (e incluso si observamos la tabla de los dato nos podemos dar cuenta que su cantidad de la especie del sitio 1 es mínima) 
+
+
 13. **Si estos sitios representaran puntos a lo largo de un gradiente altitudinal, ¿qué patrón de beta-diversidad esperarías según la teoría del dominio medio (mid-domain effect)? ¿Coincide con tus resultados?**
+
+Se esperaría que el sitio 1 fuera el de menor diversidad y el sitio 7 fuera el de mayor diversidad y los sitios intermedios tuvieran una diversidad alta pero menor que la del sitio 7 y el recambio sería gradual, de acuerdo al mapa de calor de Bray-Curtis, los datos no coinciden del todo, ya que el sitio 1 muestra extrañeza al tener tan poca diversidad, ocasionando que los valores comparados con otros sitios sea casi de 1. 
+
 
 ### E. Síntesis e interpretación ecológica
 
@@ -416,6 +434,8 @@ Bray-Curtis indica que los más diferentes son el sitio 1 y 4, mientras que Jacc
 Shannon, porque incluye riqueza y equitatividad, toma en cuenta las abundancias. Las limitaciones es que no es tan fácil de interpretar porque el límite superior es log(riqueza), y que si se muestrea menos y no se encuentran tantas especies (riqueza) el resultado cambia mucho.
 
 16. **Propón un diseño de muestreo para un estudio real que permita calcular diversidad alfa y beta de manera robusta. Especifica: número de sitios, réplicas, tamaño mínimo de muestra y justificación estadística.**
+
+Realizará un muestreo en 50 sitios diferentes, realizaría 15 réplicas de los muestreos, el tamaño mínimo de muestra seria dependiendo de la curva de rarefacción, ya que en el momento en que la curva alcance la asíntota significa que la diversidad de ese sitio a sido abarcada en su mayoría y es poco probable encontrar nuevas especies, los 50 sitios serian porque permitiría abarcar diferentes condiciones ambientales que nos permiten realizar diferentes análisis estadísticos como permanova, las 15 réplicas nos permiten que la varianza entre sitios sea más abundante, además de que permite que la diversidad en el mismo sitio pueda ser capturada de la mejor manera, es decir, que la riqueza de ese sitio sea basta. 
 
 ------------------------------------------------------------------------
 
