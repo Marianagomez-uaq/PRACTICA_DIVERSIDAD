@@ -3,6 +3,8 @@
 
 ################################################################################
 
+install.packages("pheatmap")
+library(pheatmap)
 
 # Jaccard
 
@@ -40,16 +42,19 @@ Jaccard <- function (abundancias) {
 
 htmp_Jaccard <- function (abundancias, nombre_archivo) {
   
-  Jaccar <- (Jaccard (abundancias))
-  nombre_del_archivo <- paste0 ("figures/", nombre_archivo, ".png")
+  Jaccar <- (Jaccard (abundancias)) # Usa la función anterior para generar la matriz
+  nombre_del_archivo <- paste0 ("figures/", nombre_archivo, ".png") # Le pone el nombre que indique el usuario
   
   png (nombre_del_archivo) # El archivo será png, contiene todo lo que esté antes de dev.off()
-  heatmap (Jaccar, main = "Mapa de calor de disimilitud de Jaccard", xlab = "Sitios", ylab = "Sitios")
+  pheatmap(Jaccar,
+           main = "Mapa de calor de disimilitud de Jaccard",
+           display_numbers = T) # Para que se vean los números
   dev.off()
   
 }
 
-htmp_Jaccard (Abundanciasexperimento, "Mapa de calor Jaccard")
+htmp_Jaccard (Abundancias_con_NA, "Mapa de calor Jaccard") # Ejemplo
+
 
 # Bray-Curtis
 

@@ -3,20 +3,6 @@
 
 ################################################################################
 
-Abundancias <- read.csv ("data/Abundancias.csv")
-row.names (Abundancias) <- Abundancias$Muestra
-Abundancias <- Abundancias [,2:13]
-
-Rarefaccion <- read.csv ("data/Rarefaccion.csv")
-row.names (Rarefaccion) <- Rarefaccion$Muestra
-Rarefaccion <- Rarefaccion [,2:6]
-
-Abundanciasexperimento <- read.csv ("data/Abundanciasexperimento.csv")
-row.names (Abundanciasexperimento) <- Abundanciasexperimento$Muestra
-Abundanciasexperimento <- Abundanciasexperimento [,2:13]
-
-
-
 # Riqueza
 
 Riqueza <- function (abundancias) {
@@ -39,7 +25,7 @@ Riqueza <- function (abundancias) {
 
 }
 
-Riqueza (Abundanciasexperimento)
+Riqueza (Abundancias_con_NA)
 
 
 
@@ -69,7 +55,7 @@ Shannon <- function (abundancias) { # Modificada de mi propio script (Gómez Bec
   return(shan)
 }
 
-Shannon (Abundanciasexperimento)
+Shannon (Abundancias_con_NA)
 
 
 # Simpson y simpson inverso
@@ -120,6 +106,6 @@ Chao1 <- function (abundancias) {
   return(chao)
 }
 
-Chao1 (Abundanciasexperimento)
+Chao1 (Abundancias_con_NA)
 
 # Tabla resumen

@@ -21,39 +21,150 @@ knitr::opts_chunk$set(echo = TRUE)
 | Integrante | Contribución |
 |----------------------------|--------------------------------------------|
 | **Mayra** | Simpson, Inv-simpson, Bray-Curtis, Rarefacción, Tabla resumen alfa, 8 preguntas |
-| **Mariana** | Riqueza, Shannon, Pielou, Chao1, Rank-abundance, Jaccard, 8 preguntas |
+| **Mariana** | Riqueza, Shannon, Pielou, Chao1, Rank-abundance, Jaccard, 8 preguntas (1, 2, 6, 8, 9, 11, 14, 15) |
 
 ------------------------------------------------------------------------
 
 
-```{r Carga de bases y paquetes, include=FALSE}
+```{r Instalación de paquetes, eval=FALSE, include=FALSE}
 
-
-# Carga de bases de datos
-
-Abundancias <- read.csv ("data/Abundancias.csv") # Lee el archivo y crea un data frame a partir de este
-
-row.names (Abundancias) <- Abundancias$Muestra # Toma los datos de la primera columna como nombres para las filas
-Abundancias <- Abundancias [,2:13] # Elimina esa columna
-
-
-Rarefaccion <- read.csv ("data/Rarefaccion.csv")
-
-row.names (Rarefaccion) <- Rarefaccion$Muestra
-Rarefaccion <- Rarefaccion [,2:6]
-
-
-# Carga de paquetes
-
-
-
+install.packages("reshape2")
+install.packages("ggplot2")
+install.packages("iNEXT")
+install.packages("tidyverse")
+install.packages("vegan")
+install.packages("pheatmap")
 ```
 
+```{r Carga de paquetes, include=FALSE}
+library("reshape2")
+library("ggplot2")
+library("iNEXT")
+library("tidyverse") 
+library("vegan")  
+library("pheatmap")
+```
 
+## [Bases de datos]{style="color:purple;"}
 
+Abundancias.
+```{r echo=FALSE}
+Abundancias <- read.csv ("data/Abundancias.csv") # Lee el archivo y crea un data frame a partir de este
+row.names (Abundancias) <- Abundancias$Muestra # Toma los datos de la primera columna como nombres para las filas
+Abundancias <- Abundancias [,2:13] # Elimina esa columna
+head (Abundancias)
+```
 
+Abundancias con NA. Este dataframe tiene NA en lugar de ceros, es la estructura requerida para las funciones Riqueza, Shannon, Chao1, Jaccard, htmp_Jaccard y rank_abundance
+```{r echo=FALSE}
+Abundancias_con_NA <- read.csv ("data/Abundancias_con_NA.csv") # Este dataframe tiene NA en lugar de ceros, es la estructura requerida para las funciones Riqueza, Shannon, Chao1, Jaccard, htmp_Jaccard y rank_abundance
+row.names (Abundancias_con_NA) <- Abundancias_con_NA$Muestra
+Abundancias_con_NA <- Abundancias_con_NA [,2:13]
+head (Abundancias_con_NA)
+```
+
+Rarefacción.
+```{r echo=FALSE}
+Rarefaccion <- read.csv ("data/Rarefaccion.csv")
+row.names (Rarefaccion) <- Rarefaccion$Muestra
+Rarefaccion <- Rarefaccion [,2:6]
+head (Rarefaccion)
+```
 
 ## [Diversidad alfa]{style="color:purple;"}
+
+### Riqueza
+
+```{r include=FALSE}
+Riqueza <- function (abundancias) {
+  
+  riquezas <- data.frame (Riqueza = numeric()) # Crea un dataframe con una columna vacía
+  
+  for (i in 1:nrow(abundancias)) { # ciclo for que tiene el número de ciclos como número de renglones, para calcular la riqueza de cada sitio
+    vector <- abundancias[i,] # Toma las abundancias del sitio i
+    vector <- as.numeric (vector) # Convierte el objeto a vector, porque era un dataframe y con dataframe no funciona na.omit
+    vector_sin_NA <- na.omit(vector) # Elimina los NA del vector (Que son especies no encontradas en esa muestra)
+    riquezas[i, 1] <- length(vector_sin_NA) # Cuenta cuántos elementos tiene el vector, y lo agrega al renglón i de la columna 1 del dataframe riquezas
+  
+    # Las últimas 2 líneas de código fueron modificadas de (Educative, s. f.).
+    
+  }
+  
+  row.names(riquezas) <- row.names (abundancias) # Le pone el nombre de los sitios a su respectiva riqueza
+  
+  return(riquezas)
+
+}
+```
+
+```{r}
+Riqueza (Abundancias_con_NA) # Ejemplo
+```
+
+### Shannon y Pielou
+
+```{r include=FALSE}
+Shannon <- function (abundancias) { # Modificada de mi propio script (Gómez Becerra, 2026).
+
+  shan <- data.frame (Shannon = numeric(), Pielou = numeric ()) # dataframe con 2 columnas vacías
+  riqueza <- Riqueza (abundancias) # Riqueza usando la función creada anteriormente
+  
+  for (i in 1:nrow(abundancias)) { # Un ciclo por cada sitio
+    
+    total <- sum (abundancias[i,], na.rm = T) # Suma sin tomar en cuenta las NA
+    frec <- abundancias[i,]/total
+    mult <- (log(frec))*frec
+    s <- -(sum(mult, na.rm = T))
+    shan [i, 1] <- s
+    
+    if (riqueza[i, 1] == 1) { # Si la riqueza = 1, el logaritmo será cero, y no se puede dividir entre 0, por lo que genera un NAN. Por eso pongo un if, para que ponga texto en lugar de NaN.
+      shan [i, 2] <- "No se puede calcular"
+    } else {
+      p <- s/log(riqueza[i, 1])
+    shan [i, 2] <- p
+    }
+  }
+  row.names(shan) <- row.names (abundancias)
+  return(shan)
+}
+```
+
+```{r}
+Shannon (Abundancias_con_NA) # Ejemplo
+```
+
+### Chao1
+
+```{r include=FALSE}
+Chao1 <- function (abundancias) {
+  
+  riqueza <- Riqueza (abundancias)
+  chao <- data.frame (Chao1 = numeric ())
+  
+  for (i in 1:nrow(abundancias)) {
+    
+    vector <- abundancias[i,] # Toma las abundancias del sitio i
+    vector <- as.numeric (vector) # Convierte el objeto a vector, porque era un dataframe y con dataframe no funciona na.omit
+    
+    singletons <- sum(vector == 1, na.rm = T)
+    doubletons <- sum(vector == 2, na.rm = T)
+  
+    if (singletons == 0 & doubletons == 0) { # Si no hay singletons ni doubletons, se dividiría 0/0, dando como resultado NaN. Por eso pongo un if, para que ponga texto en lugar de NaN.
+      chao [i, 1] <- "No se puede calcular"
+    } else if (doubletons == 0) { # Si sí hay singletons pero no doubletons, se dividiría x/0, lo que da Inf. Por eso pongo un if, para que ponga texto en lugar de Inf.
+      chao [i, 1] <- "No se puede calcular"
+    } else { 
+      chao [i, 1] <- (riqueza[i, 1])+((singletons^2)/(2*doubletons))
+    }
+  }
+  row.names(chao) <- row.names (abundancias)
+  return(chao)
+}
+```
+
+```{r}
+Chao1 (Abundancias_con_NA) # Ejemplo
+```
 
 ------------------------------------------------------------------------
 
@@ -63,9 +174,101 @@ Rarefaccion <- Rarefaccion [,2:6]
 
 ## [Gráficas de rango abundancia]{style="color:purple;"}
 
+```{r include=FALSE}
+rank_abundance <- function (abundancias) {
+  
+  for (i in 1:nrow(abundancias)) { # un ciclo por cada sitio
+    
+    trans <- t(abundancias) # Inicialmente lo hice así porque por alguna razón se pierden los nombres sin la transpuesta, pero después me dí cuenta que no era necesario que tuviera los nombres, pero como el código funciona lo dejé así.
+    
+    vector <- trans[,i] # Sitio i
+    vector <- vector[!is.na(vector)] # Elimina las especies no presentes
+    ordenado <- sort (vector, decreasing = T) # Ordena por abundancia de mayor a menor
+    ordenado <- as.data.frame(ordenado) # convierte a dataframe porque ggplot no acepta vectores
+    
+    nombre_archivo <- paste0 ("figures/rank_abundance_", i, ".png") # Con esto se genera un nombre único para cada sitio
+    titulo <- paste0 ("Rango-Abundancia en Sitio", i)
+    
+    png (nombre_archivo) # El archivo será png, contiene todo lo que esté antes de dev.off()
+    print (ggplot (ordenado, aes (x = which(ordenado > 0), y = log10(ordenado))) + # which indica la posición de los elementos que cumplen la condición (en este caso todos porque eliminé las NA), por lo que el eje de las X es el orden de cada especie. Y es el log10 las abundancias
+             geom_line () + # Genera una linea
+             geom_point() + # genera los puntos
+             labs (title = titulo, # le pone el título que hice anteriormente
+                   x = "Orden (Rango)",
+                   y = "log10 (Abundancia)"))
+    dev.off()
+  }
+}
+```
+
+Sí el sitio solo tiene una especie, aparecerá una advertencia, pero el código corre bien.
+
+```{r}
+rank_abundance (Abundancias_con_NA) # Ejemplo
+```
+
+Ve a la carpeta /figures, y encontrarás las gráficas
+
 ------------------------------------------------------------------------
 
 ## [Diversidad beta]{style="color:purple;"}
+
+### Jaccard
+
+```{r include=FALSE}
+Jaccard <- function (abundancias) {
+  
+  transpuesta <- t(abundancias)  # Intercambia las columnas por los renglones, lo hice porque por alguna razón, con el dataframe original no se conservan los nombres.
+  n <- nrow(abundancias) # Objeto con el número de renglones (sitios) del dataframe
+  Jacc <- (matrix (ncol = n, nrow = n)) # matriz cuadrada n x n
+  
+  for (i in 1:ncol(transpuesta)) { # Procesa el primer sitio a comparar
+    
+    A <- transpuesta[,i]
+    A <- A[!is.na(A)] # Selecciona solo los que NO SON NA
+    A <- names(A) # Reemplaza las abundancias por los nombres
+    
+    for (e in 1:ncol(transpuesta)) { # Procesa el segundo sitio a comparar
+      
+      B <- transpuesta[,e]
+      B <- B[!is.na(B)]
+      B <- names(B)
+      
+      inter <- intersect (A, B)
+      uni <- union (A, B)
+      
+      Jac <-length(inter)/length(uni) # Fórmula de Jaccard
+      
+      Jacc[i, e] <- Jac # Agrega el resultado a las coordenadas de los dos sitios
+    }
+  }
+  colnames (Jacc) <- rownames (abundancias)
+  rownames (Jacc) <- rownames (abundancias)
+  
+  return (Jacc)
+}
+```
+
+```{r include=FALSE}
+htmp_Jaccard <- function (abundancias, nombre_archivo) {
+  
+  Jaccar <- (Jaccard (abundancias)) # Usa la función anterior para generar la matriz
+  nombre_del_archivo <- paste0 ("figures/", nombre_archivo, ".png") # Le pone el nombre que indique el usuario
+  
+  png (nombre_del_archivo) # El archivo será png, contiene todo lo que esté antes de dev.off()
+  pheatmap(Jaccar,
+           main = "Mapa de calor de disimilitud de Jaccard",
+           display_numbers = T) # Para que se vean los números
+  dev.off()
+  
+}
+```
+
+```{r}
+htmp_Jaccard (Abundancias_con_NA, "Mapa de calor Jaccard") # Ejemplo
+```
+
+Ve a la carpeta /figures, y encontrarás el heatmap con el nombre que indicaste
 
 ------------------------------------------------------------------------
 
@@ -118,4 +321,4 @@ Rarefaccion <- Rarefaccion [,2:6]
 ## [Referencias]{style="color:purple;"}
 
 * Gómez Becerra, M. (2026). Diversidad (Versión 4.5.2) [Script de R].
-* Educative. (s. f.). How to get the length of a vector in R. https://www.educative.io/answers/how-to-get-the-length-of-a-vector-in-r
+* Educative. (s. f.). How to get the length of a vector in R. https://www.educative.io/answers/how-to-get-the-length-of-a-vector-in-r

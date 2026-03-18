@@ -32,7 +32,7 @@ rank_abundance <- function (abundancias) {
   }
 }
 
-rank_abundance (Abundanciasexperimento)
+rank_abundance (Abundancias_con_NA)
 
 
 # Rarefacción
