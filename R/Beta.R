@@ -45,3 +45,15 @@ Ejemplo
 heatmap (Ejemplo)
 
 # Bray-Curtis
+library(reshape2) #cargas la libreria 
+
+indiceBC <- vegdist(msimp, method = "bray") #aqui utilizas la funcion vegdist se utiliza para calcular diferentes indices utilizados en ecologia. 
+#utilizas la misma matriz utilizada en el indice de simpson y se utiliza el metodo de bray para hacer el Bray-Curtis
+indiceBC #imprime el indice de Bray-Curtis
+
+
+
+
+
+
+
