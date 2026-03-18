@@ -36,3 +36,8 @@ rank_abundance (Abundanciasexperimento)
 
 
 # Rarefacción
+rarecurve(msimp, step = 1, # aqui le decimos que la curva la tome de 1 por 1 
+          sample = min(rowSums(msimp)), # aqui decimos que dibuje una línea vertical en el tamaño de muestra más pequeño
+          col = c("red","blue", "cyan4", "pink", "orange2", "red4", "purple4"), # definimos el color de las líneas
+          cex = 0.7, # definimos el tamaño de las etiquetas de los sitios
+          main = "Curva de Rarefacción por Sitio") # le asignamos el titulo a la grafica 

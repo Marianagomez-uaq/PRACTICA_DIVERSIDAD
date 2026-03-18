@@ -74,6 +74,7 @@ Shannon (Abundanciasexperimento)
 
 # Simpson y simpson inverso 
 read.csv("data/Abundancias.csv")
+Abundancias <- read.csv("data/Abundancias.csv")
 install.packages("iNEXT")
 install.packages("tidyverse")
 library(iNEXT)
