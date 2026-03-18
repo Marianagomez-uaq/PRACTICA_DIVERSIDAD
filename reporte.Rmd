@@ -16,6 +16,14 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ------------------------------------------------------------------------
 
+## [Información general]{style="color:purple;"}
+
+| Integrantes | Mayra Lizeth Bárcenas Guevara y Mariana Gómez Becerra |
+|----------------------------|--------------------------------------------|
+| Fecha de entrega | 19 de marzo de 2026 |
+| Materia | Genómica Funcional |
+| Liga GitHub | https://github.com/Marianagomez-uaq/PRACTICA_DIVERSIDAD |
+
 ## [Distribución de tareas]{style="color:purple;"}
 
 | Integrante | Contribución |
