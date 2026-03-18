@@ -72,9 +72,24 @@ Shannon <- function (abundancias) { # Modificada de mi propio script (Gómez Bec
 Shannon (Abundanciasexperimento)
 
 
-# Simpson
+# Simpson y simpson inverso 
+read.csv("data/Abundancias.csv")
+install.packages("iNEXT")
+install.packages("tidyverse")
+library(iNEXT)
+library(tidyverse) 
+library(vegan)    
 
-# Simpson inverso
+msimp <- Abundancias %>% column_to_rownames("Muestra") #Estamos haciendo la matriz con la base de datos Abundancias, el column_to_rownames lo utilizo para especificar la columna que quiero que utilice, esto se hace para onvertir la primera columna en nombres de filas 
+
+alfa <- data.frame( #Le estoy especificando que utilice una base de datos 
+  sitio    = rownames(msimp), #Le estoy especificando que utilice los renglones de la matriz msimp
+  riqueza  = specnumber(msimp),#Le estoy especificando que utilice las columnas de la matriz msimp
+  simpson  = diversity(msimp, index = "simpson"), #aqui estoy diciendole que utilice la diversidad de la matriz para el indice de simpsoin
+  inv_simp = diversity(msimp, index = "invsimpson") ##aqui estoy diciendole que utilice la diversidad de la matriz para el inverso de simpson 
+)
+alfa #imprime el objeto para ver los resultados 
+
 
 # Chao1
 
