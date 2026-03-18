@@ -278,7 +278,13 @@ Ve a la carpeta /figures, y encontrarás el heatmap con el nombre que indicaste
 
 1.  Compara los valores de Shannon y Simpson entre todos los sitios. ¿Por qué pueden dar órdenes de ranking distintos? ¿Qué información adicional aporta cada uno?
 
+Pueden dar órdenes de ranking distintos porque Shannon en su máximo representa población equitativa, y en su mínimo dominio de una especie. En Simpson es al revés (Máximo dominio de una especie, mínimo equitativo), por lo tanto los ranking estarían invertidos. Además, Shannon no se limita a 1, sino que al log(riqueza), por lo tanto puede variar mucho el ranking.
+Simpson da más información ya que no dependemos de la riqueza para interpretar el resultado.
+
 2.  ¿Qué sitio presenta la mayor equitatividad según Pielou? ¿Podría tener mayor equitatividad pero menor riqueza que otro sitio? Explica con un ejemplo numérico concreto.
+
+El sitio 5 es el más equitativo. 
+Sí podría tener más equitatividad pero menor riqueza, se observa esto con los sitios 2 y 6. El sitio 2 tiene riqueza 9 y el sitio 6 tiene riqueza 8, pero el sitio 2 tiene Pielou de 0.80, y el sitio 6 tiene Pielou de 0.88. El sitio 6 es menos rico pero más equitativo, esto se debe a que la equitatividad depende de si cada especie tiene abundancias similares, es independiente de la riqueza.
 
 3.  Compara la riqueza observada (S) con el estimado de Chao1. ¿En qué sitio la brecha es mayor? ¿Qué implicación tiene esto para el diseño de un muestreo real?
 
@@ -290,19 +296,33 @@ Ve a la carpeta /figures, y encontrarás el heatmap con el nombre que indicaste
 
 6.  Dos sitios pueden tener la misma riqueza observada pero curvas con pendientes muy distintas. ¿Cómo interpretas esa diferencia en términos de abundancias relativas?
 
+Una curva con pendiente muy elevada, se interpreta como que hay mucha abundancia de varias especies (podría decirse que son equitativas), mientras que una curva con pendiente baja se interpreta como que hay dominio de una especie y otras tienen menos abundancia.
+
 7.  ¿A qué tamaño de muestra estandarizado compararías los sitios? Justifica tu elección y calcula la riqueza rarefactada para todos los sitios a ese nivel.
 
 ### C. Gráficas de rango-abundancia
 
 8.  Identifica la forma general de cada curva (log-normal, geométrica, etc.). ¿Qué modelo ecológico subyace a cada forma? ¿Qué mecanismos comunitarios podrían explicarla?
 
+Algunas son log-normal, lo cual indica que la comunidad es estable, ya que la mayoría de especies están intermedias, y la especie dominante no domina demasiado.
+
+Otras son geométricas, con pendiente muy marcada en la que una o más especies dominan mucho en la comunidad. Esto podría ser debido a una perturbación que haya seleccionado evolutivamente a estas pocas especies.
+
 9.  ¿En qué sitio la especie más dominante representa la mayor fracción de individuos? ¿Cómo se relaciona ese resultado con el índice de Simpson?
+
+En el sitio 1, la especie dominante representa el 100% de la población ya que solo hay una especie. En el sitio 2, la especie dominante (Azul marino) representa el 36% de la población.
+
+El índice de Simpson del sitio 1 es de 0 (Totalmente equitativo), y del sitio 2 es de 0.77 (Muy alto, indica que hay gran dominio de una especie).
 
 10. Imagina que en un monitoreo de largo plazo una curva log-normal se convierte en geométrica. ¿Qué perturbación ecológica podría explicarlo?
 
 ### D. Diversidad beta
 
 11. Analiza la matriz de Bray-Curtis. ¿Qué par de sitios es más diferente? ¿Es el mismo par más diferente según Jaccard? Si no coinciden, ¿a qué se debe?
+
+Bray-Curtis indica que los más diferentes son el sitio 1 y 4, mientras que Jaccard indica que son el sitio 1 y 2.
+Esto puede deberse a que Jaccard no toma en cuenta abundancias, solo especies compartidas, y el sitio 1 y 2 no comparten ninguna, mientras que el sitio 1 y 4 sí (Morado).
+Por otro lado, BC se basa también en el total de individuos por sitio y abundancias menores, y con esto se puede ver que las abundancias son muy diferentes entre el sitio 1 y 4 (Morado = 41 en el 1, y Morado = 1 en el 4). Esto hace que se divida un número pequeño (1, porque se toma la abundancia menor) entre un número muy grande (total de individuos), esto se le resta a un y el resultado es un número más cercano a 1 que a 0.
 
 12. ¿Qué componentes del recambio beta (reemplazo vs. anidamiento) podrían explicar los patrones que observas? (Pista: investiga el paquete betapart en R.)
 
@@ -312,7 +332,17 @@ Ve a la carpeta /figures, y encontrarás el heatmap con el nombre que indicaste
 
 14. Construye una narrativa ecológica coherente: tomando todos los índices calculados, describe qué tipo de comunidad representa cada sitio (p. ej. perturbada, madura, oligoespéciosa) y propón una hipótesis sobre el proceso ecológico que generó esas diferencias.
 
+1 -> Perturbada, solo hay una especie. Podría ser debido a un desastre natural muy fuerte, que arrasó con toda la comunidad, a excepción de esa especie.
+2-> Madura, la mayoría de especies están intermedias. Aunque probablemente hubo anteriormente una perturbación que provocó que la especie dominante aumentara mucho su abundancia, pero parece que va a la baja y otras especies se recuperan.
+3-> Madura, la mayoría de especies están intermedias, y la especie dominante no domina demasiado.
+4-> Madura, la mayoría de especies están intermedias. Aunque probablemente hubo anteriormente una perturbación que provocó que la especie dominante aumentara mucho su abundancia, pero parece que va a la baja y otras especies se recuperan.
+5-> Perturbada, la mayoría de especies aumentó mucho su abundancia, probablemente hubo un aumento de recursos considerable por lo que se redujo la competencia y todos aprovecharon los recursos..
+6-> Perturbada, hay 3 especies dominantes, 3 en “recuperación” y 2 que redujeron drásticamente su población, puede ser que hubo un desastre natural y todas las especies se mantuvieron, pero algunas con mayor ventaja.
+7-> Perturbada, hay 5 especies dominantes, 4 en “recuperación” y 1 que redujo drásticamente su población, puede ser que hubo un desastre natural y todas las especies se mantuvieron, pero algunas con mayor ventaja.
+
 15. Si tuvieras que escoger un solo índice para monitorear la salud de estas comunidades a lo largo del tiempo, ¿cuál elegirías y por qué? ¿Cuáles serían sus limitaciones?
+
+Shannon, porque incluye riqueza y equitatividad, toma en cuenta las abundancias. Las limitaciones es que no es tan fácil de interpretar porque el límite superior es log(riqueza), y que si se muestrea menos y no se encuentran tantas especies (riqueza) el resultado cambia mucho.
 
 16. Propón un diseño de muestreo para un estudio real que permita calcular diversidad alfa y beta de manera robusta. Especifica: número de sitios, réplicas, tamaño mínimo de muestra y justificación estadística.
 
