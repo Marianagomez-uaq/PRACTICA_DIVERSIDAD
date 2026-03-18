@@ -143,6 +143,27 @@ Shannon <- function (abundancias) { # Modificada de mi propio script (Gómez Bec
 Shannon (Abundancias_con_NA) # Ejemplo
 ```
 
+### Simpson
+
+
+```{r include=FALSE}
+# Simpson y simpson inverso
+
+msimp <- Abundancias %>% column_to_rownames("Muestra") #Estamos haciendo la matriz con la base de datos Abundancias, el column_to_rownames lo utilizo para especificar la columna que quiero que utilice, esto se hace para onvertir la primera columna en nombres de filas 
+
+alfa <- data.frame( #Le estoy especificando que utilice una base de datos 
+  sitio    = rownames(msimp), #Le estoy especificando que utilice los renglones de la matriz msimp
+  riqueza  = specnumber(msimp),#Le estoy especificando que utilice las columnas de la matriz msimp
+  simpson  = diversity(msimp, index = "simpson"), #aqui estoy diciendole que utilice la diversidad de la matriz para el indice de simpsoin
+  inv_simp = diversity(msimp, index = "invsimpson") ##aqui estoy diciendole que utilice la diversidad de la matriz para el inverso de simpson 
+)
+```
+
+```{r}
+print (alfa)
+```
+
+
 ### Chao1
 
 ```{r include=FALSE}
@@ -179,6 +200,18 @@ Chao1 (Abundancias_con_NA) # Ejemplo
 ------------------------------------------------------------------------
 
 ## [Curvas de rarefacción]{style="color:purple;"}
+
+```{r echo=FALSE}
+rarecurve(msimp, step = 1, # aqui le decimos que la curva la tome de 1 por 1 
+          sample = min(rowSums(msimp)), # aquim decimos que dibuje una línea vertical en el tamaño de muestra mas pequeño
+          col = c("red","blue", "cyan4", "pink", "orange2", "red4", "purple4"), # definimos el color de las lineas
+          cex = 0.7, # definimos el tamaño de las etiquetas de los sitios
+          main = "Curva de Rarefacción por Sitio", # le asignamos el titulo a la grafica
+          xlab = "individuos", # le asignas un nombre al eje x 
+          ylab = "riqueza por sitio") # le asignas un nombre al eje y 
+
+```
+
 
 ------------------------------------------------------------------------
 
@@ -279,6 +312,32 @@ htmp_Jaccard (Abundancias_con_NA, "Mapa de calor Jaccard") # Ejemplo
 ```
 
 Ve a la carpeta /figures, y encontrarás el heatmap con el nombre que indicaste
+
+### Bray-Curtis
+
+```{r include=FALSE}
+indiceBC <- vegdist(msimp, method = "bray") #aqui utilizas la funcion vegdist se utiliza para calcular diferentes indices utilizados en ecologia. 
+#utilizas la misma matriz utilizada en el indice de simpson y se utiliza el metodo de bray para hacer el Bray-Curtis
+indiceBC #imprime el indice de Bray-Curtis
+
+hmBC <- function(dist_obj, titulo) {
+  melt(as.matrix(dist_obj)) %>% #el %>% sirve como tipo pipe para encadenar funciones 
+    ggplot(aes(Var1, Var2, fill = value)) + #asignamos las variables 
+    geom_tile(color = "black") + #asignas el color de las lineas que lo dividen 
+    geom_text(aes(label = round(value, 2)), size = 3.5) + #asignas la cantidad de los decimales y el tamaño de los numeros 
+    scale_fill_gradient(low = "cyan", high = "green", # determinamos la escala de color, cyan para el bajo y green para el alto
+                        name = "Disimilitud") + # asignamos el nombre del heat map
+    labs(title = titulo, x = NULL, y = NULL) + #asignamos el nombre a los ejes x y y, en este caso lo dejamos sin modificar
+    
+    theme_minimal(base_size = 10) + #asignas el tamaño que ocupa en la pantalla la tabla
+    theme(axis.text.x = element_text(angle = 45, hjust = 1)) #asignas el angulo de lo que esta escrito en el eje x y y
+}
+```
+
+```{r}
+hmBC(indiceBC, "Disimilitud de Bray-Curtis") #imprimimos el heat map (mapa de calor)
+```
+
 
 ------------------------------------------------------------------------
 
