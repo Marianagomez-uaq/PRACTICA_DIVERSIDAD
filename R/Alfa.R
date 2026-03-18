@@ -72,7 +72,8 @@ Shannon <- function (abundancias) { # Modificada de mi propio script (Gómez Bec
 Shannon (Abundanciasexperimento)
 
 
-# Simpson y simpson inverso 
+# Simpson y simpson inverso
+
 read.csv("data/Abundancias.csv")
 install.packages("iNEXT")
 install.packages("tidyverse")

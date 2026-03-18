@@ -38,13 +38,22 @@ Jaccard <- function (abundancias) {
   return (Jacc)
 }
 
-Ejemplo <- (Jaccard (Abundanciasexperimento))
-Ejemplo
+htmp_Jaccard <- function (abundancias, nombre_archivo) {
+  
+  Jaccar <- (Jaccard (abundancias))
+  nombre_del_archivo <- paste0 ("figures/", nombre_archivo, ".png")
+  
+  png (nombre_del_archivo) # El archivo será png, contiene todo lo que esté antes de dev.off()
+  heatmap (Jaccar, main = "Mapa de calor de disimilitud de Jaccard", xlab = "Sitios", ylab = "Sitios")
+  dev.off()
+  
+}
 
-
-heatmap (Ejemplo)
+htmp_Jaccard (Abundanciasexperimento, "Mapa de calor Jaccard")
 
 # Bray-Curtis
+
+install.packages("reshape2")
 library(reshape2) #cargas la libreria 
 
 indiceBC <- vegdist(msimp, method = "bray") #aqui utilizas la funcion vegdist se utiliza para calcular diferentes indices utilizados en ecologia. 
