@@ -149,7 +149,9 @@ Shannon (Abundancias_con_NA) # Ejemplo
 ```{r include=FALSE}
 # Simpson y simpson inverso
 
-msimp <- Abundancias %>% column_to_rownames("Muestra") #Estamos haciendo la matriz con la base de datos Abundancias, el column_to_rownames lo utilizo para especificar la columna que quiero que utilice, esto se hace para onvertir la primera columna en nombres de filas 
+# msimp <- Abundancias %>% column_to_rownames("Muestra") #Estamos haciendo la matriz con la base de datos Abundancias, el column_to_rownames lo utilizo para especificar la columna que quiero que utilice, esto se hace para convertir la primera columna en nombres de filas 
+
+msimp <- Abundancias # No sé porque no funciona con los nombres de filas, lo quité
 
 alfa <- data.frame( #Le estoy especificando que utilice una base de datos 
   sitio    = rownames(msimp), #Le estoy especificando que utilice los renglones de la matriz msimp
