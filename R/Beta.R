@@ -51,8 +51,19 @@ indiceBC <- vegdist(msimp, method = "bray") #aqui utilizas la funcion vegdist se
 #utilizas la misma matriz utilizada en el indice de simpson y se utiliza el metodo de bray para hacer el Bray-Curtis
 indiceBC #imprime el indice de Bray-Curtis
 
-
-
+hmBC <- function(dist_obj, titulo) {
+  melt(as.matrix(dist_obj)) %>% #el %>% sirve como tipo pipe para encadenar funciones 
+    ggplot(aes(Var1, Var2, fill = value)) + #asignamos las variables 
+    geom_tile(color = "black") + #asignas el color de las lineas que lo dividen 
+    geom_text(aes(label = round(value, 2)), size = 3.5) + #asignas la cantidad de los decimales y el tamaño de los numeros 
+    scale_fill_gradient(low = "cyan", high = "green", # determinamos la escala de color, cyan para el bajo y green para el alto
+                        name = "Disimilitud") + # asignamos el nombre del heat map
+    labs(title = titulo, x = NULL, y = NULL) + #asignamos el nombre a los ejes x y y, en este caso lo dejamos sin modificar
+    
+    theme_minimal(base_size = 10) + #asignas el tamaño que ocupa en la pantalla la tabla
+    theme(axis.text.x = element_text(angle = 45, hjust = 1)) #asignas el angulo de lo que esta escrito en el eje x y y
+}
+hmBC(indiceBC, "Disimilitud de Bray-Curtis") #imprimimos el heat map (mapa de calor)
 
 
 
