@@ -362,11 +362,21 @@ Becerra</h4>
 <ul>
 <li><a href="#distribuci%C3%B3n-de-tareas" id="toc-distribución-de-tareas"><span style="color:purple;">Distribución
 de tareas</span></a></li>
-<li><a href="#diversidad-alfa" id="toc-diversidad-alfa"><span style="color:purple;">Diversidad alfa</span></a></li>
+<li><a href="#bases-de-datos" id="toc-bases-de-datos"><span style="color:purple;">Bases de datos</span></a></li>
+<li><a href="#diversidad-alfa" id="toc-diversidad-alfa"><span style="color:purple;">Diversidad alfa</span></a>
+<ul>
+<li><a href="#riqueza" id="toc-riqueza">Riqueza</a></li>
+<li><a href="#shannon-y-pielou" id="toc-shannon-y-pielou">Shannon y
+Pielou</a></li>
+<li><a href="#chao1" id="toc-chao1">Chao1</a></li>
+</ul></li>
 <li><a href="#curvas-de-rarefacci%C3%B3n" id="toc-curvas-de-rarefacción"><span style="color:purple;">Curvas de
 rarefacción</span></a></li>
 <li><a href="#gr%C3%A1ficas-de-rango-abundancia" id="toc-gráficas-de-rango-abundancia"><span style="color:purple;">Gráficas de rango abundancia</span></a></li>
-<li><a href="#diversidad-beta" id="toc-diversidad-beta"><span style="color:purple;">Diversidad beta</span></a></li>
+<li><a href="#diversidad-beta" id="toc-diversidad-beta"><span style="color:purple;">Diversidad beta</span></a>
+<ul>
+<li><a href="#jaccard" id="toc-jaccard">Jaccard</a></li>
+</ul></li>
 <li><a href="#preguntas-de-an%C3%A1lisis-y-reflexi%C3%B3n" id="toc-preguntas-de-análisis-y-reflexión"><span style="color:purple;">Preguntas de análisis y reflexión</span></a>
 <ul>
 <li><a href="#a.-diversidad-alfa---comparaci%C3%B3n-entre-%C3%ADndices" id="toc-a.-diversidad-alfa---comparación-entre-índices">A. Diversidad
@@ -405,15 +415,95 @@ interpretación ecológica</a></li>
 </tr>
 <tr class="even">
 <td><strong>Mariana</strong></td>
-<td>Shannon, Pielou, Chao1, Rank-abundance, Jaccard, 8 preguntas</td>
+<td>Riqueza, Shannon, Pielou, Chao1, Rank-abundance, Jaccard, 8
+preguntas (1, 2, 6, 8, 9, 11, 14, 15)</td>
 </tr>
 </tbody>
 </table>
 <hr />
 </div>
+<div id="bases-de-datos" class="section level2">
+<h2><span style="color:purple;">Bases de datos</span></h2>
+<p>Abundancias.</p>
+<pre><code>##         Turquesa Azul_cielo Azul_marino Fucsia Rosa_medio Naranja Rojo
+## Sitio_1        0          0           0      0          0       0    0
+## Sitio_2       14         10           3      3          2       0    2
+## Sitio_3        5          3           7      3          2       5    5
+## Sitio_4        5          3          18      5          1       2    2
+## Sitio_5        3          7          10      9         10      10   10
+## Sitio_6        0          0           4      2          3       8    1
+##         Verde_limon Verde_oscuro Amarillo Morado Rosa_claro
+## Sitio_1           0            0        0     41          0
+## Sitio_2           1            1        0      0          2
+## Sitio_3           4            9        4      2          1
+## Sitio_4          15           10        3      1          3
+## Sitio_5           8            2       10      6         10
+## Sitio_6           0            0        1      9          7</code></pre>
+<p>Abundancias con NA. Este dataframe tiene NA en lugar de ceros, es la
+estructura requerida para las funciones Riqueza, Shannon, Chao1,
+Jaccard, htmp_Jaccard y rank_abundance</p>
+<pre><code>##   Turquesa Azul_cielo Azul_marino Fucsia Rosa_medio Naranja Rojo Verde_limon
+## 1       NA         NA          NA     NA         NA      NA   NA          NA
+## 2       14         10           3      3          2      NA    2           1
+## 3        5          3           7      3          2       5    5           4
+## 4        5          3          18      5          1       2    2          15
+## 5        3          7          10      9         10      10   10           8
+## 6       NA         NA           4      2          3       8    1          NA
+##   Verde_oscuro Amarillo Morado Rosa_claro
+## 1           NA       NA     41         NA
+## 2            1       NA     NA          2
+## 3            9        4      2          1
+## 4           10        3      1          3
+## 5            2       10      6         10
+## 6           NA        1      9          7</code></pre>
+<p>Rarefacción.</p>
+<pre><code>##         Muestreo_1 Muestreo_2 Muestreo_3 Muestreo_4 Muestreo_5
+## Sitio_1          1          1          1          1          1
+## Sitio_2          6          9          9          9          9
+## Sitio_3         11         12         12         12         12
+## Sitio_4          7          9         10         11         12
+## Sitio_5         10         12         12         12         12
+## Sitio_6          6         14         14         14         14</code></pre>
+</div>
 <div id="diversidad-alfa" class="section level2">
 <h2><span style="color:purple;">Diversidad alfa</span></h2>
+<div id="riqueza" class="section level3">
+<h3>Riqueza</h3>
+<pre class="r"><code>Riqueza (Abundancias_con_NA) # Ejemplo</code></pre>
+<pre><code>##   Riqueza
+## 1       1
+## 2       9
+## 3      12
+## 4      12
+## 5      12
+## 6       8
+## 7      10</code></pre>
+</div>
+<div id="shannon-y-pielou" class="section level3">
+<h3>Shannon y Pielou</h3>
+<pre class="r"><code>Shannon (Abundancias_con_NA) # Ejemplo</code></pre>
+<pre><code>##    Shannon               Pielou
+## 1 0.000000 No se puede calcular
+## 2 1.776449    0.808496802427562
+## 3 2.352171    0.946583422055785
+## 4 2.095570    0.843319346392953
+## 5 2.410511    0.970061163916205
+## 6 1.833656    0.881801986890727
+## 7 2.122484    0.921782875830581</code></pre>
+</div>
+<div id="chao1" class="section level3">
+<h3>Chao1</h3>
+<pre class="r"><code>Chao1 (Abundancias_con_NA) # Ejemplo</code></pre>
+<pre><code>##                  Chao1
+## 1 No se puede calcular
+## 2     9.66666666666667
+## 3                12.25
+## 4                   13
+## 5                   12
+## 6                   10
+## 7 No se puede calcular</code></pre>
 <hr />
+</div>
 </div>
 <div id="curvas-de-rarefacción" class="section level2">
 <h2><span style="color:purple;">Curvas de rarefacción</span></h2>
@@ -421,11 +511,25 @@ interpretación ecológica</a></li>
 </div>
 <div id="gráficas-de-rango-abundancia" class="section level2">
 <h2><span style="color:purple;">Gráficas de rango abundancia</span></h2>
+<p>Sí el sitio solo tiene una especie, aparecerá una advertencia, pero
+el código corre bien.</p>
+<pre class="r"><code>rank_abundance (Abundancias_con_NA) # Ejemplo</code></pre>
+<pre><code>## `geom_line()`: Each group consists of only one observation.
+## ℹ Do you need to adjust the group aesthetic?</code></pre>
+<p>Ve a la carpeta /figures, y encontrarás las gráficas</p>
 <hr />
 </div>
 <div id="diversidad-beta" class="section level2">
 <h2><span style="color:purple;">Diversidad beta</span></h2>
+<div id="jaccard" class="section level3">
+<h3>Jaccard</h3>
+<pre class="r"><code>htmp_Jaccard (Abundancias_con_NA, &quot;Mapa de calor Jaccard&quot;) # Ejemplo</code></pre>
+<pre><code>## png 
+##   3</code></pre>
+<p>Ve a la carpeta /figures, y encontrarás el heatmap con el nombre que
+indicaste</p>
 <hr />
+</div>
 </div>
 <div id="preguntas-de-análisis-y-reflexión" class="section level2">
 <h2><span style="color:purple;">Preguntas de análisis y
@@ -512,7 +616,7 @@ estadística.</p></li>
 <ul>
 <li>Gómez Becerra, M. (2026). Diversidad (Versión 4.5.2) [Script de
 R].</li>
-<li>Educative. (s. f.). How to get the length of a vector in R. <a href="https://www.educative.io/answers/how-to-get-the-length-of-a-vector-in-r" class="uri">https://www.educative.io/answers/how-to-get-the-length-of-a-vector-in-r</a></li>
+<li>Educative. (s. f.). How to get the length of a vector in R. <a href="https://www.educative.io/answers/how-to-get-the-length-of-a-vector-in-r" class="uri">https://www.educative.io/answers/how-to-get-the-length-of-a-vector-in-r</a></li>
 </ul>
 </div>
 
