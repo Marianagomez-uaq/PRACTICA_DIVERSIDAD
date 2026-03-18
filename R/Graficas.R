@@ -41,8 +41,8 @@ rarecurve(msimp, step = 1, # aqui le decimos que la curva la tome de 1 por 1
           col = c("red","blue", "cyan4", "pink", "orange2", "red4", "purple4"), # definimos el color de las lineas
           cex = 0.7, # definimos el tamaño de las etiquetas de los sitios
           main = "Curva de Rarefacción por Sitio", # le asignamos el titulo a la grafica
-          xlab = "sitio", # le asignas un nombre al eje x 
-          ylab = "riqueza") # le asignas un nombre al eje y 
+          xlab = "individuos", # le asignas un nombre al eje x 
+          ylab = "riqueza por sitio") # le asignas un nombre al eje y 
 
 
 
